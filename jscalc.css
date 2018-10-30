@@ -1,0 +1,39 @@
+#calcTbl
+{
+	padding: 1.5em;
+	border: 1px solid #000000;
+	border-radius: 1em;
+	background: #FFFFCC;
+}
+
+.trBtns td
+{
+	width: 20%;
+}
+.calcBtns
+{
+	width: 100%;
+	height: auto;
+	font-size: 3em;
+	text-align: center;
+	background: #FFE533;
+	cursor: pointer;
+	border: 1px solid #000000;
+	border-radius: 0.5em;
+}
+
+.calcBtns:hover
+{
+	background: #CE5000;
+	color: #FFFFFF;
+	border: 1px solid #CA0000;
+}
+
+#calcFace
+{
+	background: #FFFFFF;
+	color: #000000;
+	text-align: right;
+	font-size: 2.5em;
+	width: 100%;
+}
