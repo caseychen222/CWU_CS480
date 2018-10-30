@@ -128,10 +128,16 @@ function checkForDecimals()
 {
 	var str = Array.from(document.getElementById("calcFace").value);
 	
-	if (decCount > 1 && 
-		str.indexOf("+") == -1 && str.indexOf("*") == -1 && str.indexOf("-") == -1 && str.indexOf("/") == -1 && str.indexOf("%")== -1)
+	if (decCount > 1)
 	{
-		return false;
+		if (str.indexOf("+") == -1 && str.indexOf("*") == -1 && str.indexOf("-") == -1 && str.indexOf("/") == -1 && str.indexOf("%")== -1)
+		{
+			return false;
+		}
+		else
+		{
+			return true;
+		}
 	}
 	
 	return true;
@@ -186,6 +192,11 @@ function backspace()
 	
 	var a = str.pop();
 	
+	if (a == ".")
+	{
+		--decCount;
+	}
+	
 	dispClear();
 	placeInCalc(str.join(""));
 }
@@ -212,16 +223,19 @@ function trigFx(fx)
 		case "sine":
 			dispClear();
 			placeInCalc(Math.sin(initial));
+			decCount = 0;
 			break;
 			
 		case "cosine":
 			dispClear();
 			placeInCalc(Math.cos(initial));
+			decCount = 0;
 			break;
 			
 		case "tangent":
 			dispClear();
 			placeInCalc(Math.tan(initial));
+			decCount = 0;
 			break;
 	}
 }
@@ -262,15 +276,15 @@ function fact()
 			
 			n--;
 		}
-	}
-	else
-	{
-		result = Math.sqrt((2 * n + (1 / 3)) * Math.PI) * Math.pow(n, n) * Math.pow(Math.E, -1 * n);
 		
 		if (neg == 1)
 		{
 			result *= -1;
 		}
+	}
+	else
+	{
+		result = Math.sqrt((2 * n + (1 / 3)) * Math.PI) * Math.pow(n, n) * Math.pow(Math.E, -1 * n);
 	}
 
 	dispClear();
