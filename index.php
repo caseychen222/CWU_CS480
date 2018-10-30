@@ -26,7 +26,7 @@
 			</tr>
 			<tr class="trBtns">
 				<td>
-					<input type="button" value="%" class="calcBtns opsBtn" onclick="placeInCalc('%')" />
+					<input type="button" value="%" class="opsBtn" onclick="placeInCalc('%')" />
 				</td>
 				<td>
 					<input type="button" value="&radic;" class="calcBtns" onclick="squareRoot()" />
@@ -52,7 +52,7 @@
 					<input type="button" value=")" class="calcBtns" onclick="placeInCalc(')')" />
 				</td>
 				<td>
-					<input type="button" value="/" class="calcBtns opsBtn" onclick="placeInCalc('/')" />
+					<input type="button" value="/" class="opsBtn" onclick="placeInCalc('/')" />
 				</td>
 				<td>
 					<input type="button" value="sin" class="calcBtns" onclick="trigFx('sine')" />
@@ -69,7 +69,7 @@
 					<input type="button" value="9" class="calcBtns" onclick="placeInCalc('9')" />
 				</td>
 				<td>
-					<input type="button" value="*" class="calcBtns opsBtn" onclick="placeInCalc('*')" />
+					<input type="button" value="*" class="opsBtn" onclick="placeInCalc('*')" />
 				</td>
 				<td>
 					<input type="button" value="cos" class="calcBtns" onclick="trigFx('cosine')" />
@@ -86,7 +86,7 @@
 					<input type="button" value="6" class="calcBtns" onclick="placeInCalc('6')" />
 				</td>
 				<td>
-					<input type="button" value="-" class="calcBtns opsBtn" onclick="placeInCalc('-')" />
+					<input type="button" value="-" class="opsBtn" onclick="placeInCalc('-')" />
 				</td>
 				<td>
 					<input type="button" value="tan" class="calcBtns" onclick="trigFx('tangent')" />
@@ -103,7 +103,7 @@
 					<input type="button" value="3" class="calcBtns" onclick="placeInCalc('3')" />
 				</td>
 				<td>
-					<input type="button" value="+" class="calcBtns opsBtn" onclick="placeInCalc('+')" />
+					<input type="button" value="+" class="opsBtn" onclick="placeInCalc('+')" />
 				</td>
 				<td>
 					<input type="button" value="n!" class="calcBtns" onclick="fact()" />

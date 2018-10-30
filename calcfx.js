@@ -9,6 +9,11 @@ function dispClear()
 {
 	document.getElementById("errors").innerHTML = "";
 	document.getElementById("calcFace").value = "";
+	
+	if (decCount > 0)
+	{
+		decCount = 0;
+	}
 }
 
 function dismiss()
@@ -139,10 +144,6 @@ function checkForDecimals()
 		{
 			return false;
 		}
-		else
-		{
-			return true;
-		}
 	}
 	
 	return true;
@@ -218,29 +219,30 @@ function trigFx(fx)
 	
 	if (!checkForDecimals())
 	{
+		document.getElementById("errors").innerHTML = "ERROR: Cannot have more than one decimal point in a single number.";
+		document.getElementById("errors").innerHTML += " <a href='javascript:dismiss()'>DISMISS</a>";
+		
 		return;
 	}
 	
 	var initial = eval(document.getElementById("calcFace").value);
+	var inRad = (initial * Math.PI) / 180;
 	
 	switch (fx)
 	{
 		case "sine":
 			dispClear();
-			placeInCalc(Math.sin(initial));
-			decCount = 0;
+			placeInCalc(Math.sin(inRad));
 			break;
 			
 		case "cosine":
 			dispClear();
-			placeInCalc(Math.cos(initial));
-			decCount = 0;
+			placeInCalc(Math.cos(inRad));
 			break;
 			
 		case "tangent":
 			dispClear();
-			placeInCalc(Math.tan(initial));
-			decCount = 0;
+			placeInCalc(Math.tan(inRad));
 			break;
 	}
 }

@@ -21,7 +21,7 @@
 	height: auto;
 	font-size: 3em;
 	text-align: center;
-	background: #FFE533;
+	background: #F9F9F9;
 	cursor: pointer;
 	border: 1px solid #000000;
 	border-radius: 0.5em;
@@ -29,13 +29,27 @@
 
 .opsBtn
 {
-	background: #6666CC;
+	width: 100%;
+	height: auto;
+	font-size: 3em;
+	text-align: center;
+	background: #669999;
 	color: #FFFFFF;
+	cursor: pointer;
+	border: 1px solid #000000;
+	border-radius: 0.5em;
 }
 
 .calcBtns:hover
 {
 	background: #CE5000;
+	color: #FFFFFF;
+	border: 1px solid #CA0000;
+}
+
+.opsBtn:hover
+{
+	background: #CC6660;
 	color: #FFFFFF;
 	border: 1px solid #CA0000;
 }
