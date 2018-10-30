@@ -78,6 +78,9 @@ function calculate()
 	
 	if (!checkForDecimals())
 	{
+		document.getElementById("errors").innerHTML = "ERROR: Cannot have more than one decimal point in a single number.";
+		document.getElementById("errors").innerHTML += " <a href='javascript:dismiss()'>DISMISS</a>";
+		
 		return;
 	}
 
@@ -128,9 +131,6 @@ function checkForDecimals()
 	if (decCount > 1 && 
 		str.indexOf("+") == -1 && str.indexOf("*") == -1 && str.indexOf("-") == -1 && str.indexOf("/") == -1 && str.indexOf("%")== -1)
 	{
-		document.getElementById("errors").innerHTML = "ERROR: Cannot have more than one decimal point in a single number.";
-		document.getElementById("errors").innerHTML += " <a href='javascript:dismiss()'>DISMISS</a>";
-	
 		return false;
 	}
 	
