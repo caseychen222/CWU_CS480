@@ -8,7 +8,7 @@
 	padding: 1.5em;
 	border: 1px solid #000000;
 	border-radius: 1em;
-	background: #FFFFCC;
+	background: #CCCCCC;
 }
 
 .trBtns td
@@ -25,6 +25,12 @@
 	cursor: pointer;
 	border: 1px solid #000000;
 	border-radius: 0.5em;
+}
+
+.opsBtn
+{
+	background: #6666CC;
+	color: #FFFFFF;
 }
 
 .calcBtns:hover
