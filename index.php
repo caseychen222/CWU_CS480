@@ -1,3 +1,7 @@
+<!--
+	CASEY CHEN
+	CS 480 - Lab 3
+//-->
 <!DOCTYPE html>
 <html>
 	<head>

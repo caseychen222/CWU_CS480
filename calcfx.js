@@ -1,3 +1,8 @@
+/*
+	Casey Chen
+	CS 480 - Lab 3
+*/
+
 var decCount = 0;
 
 function dispClear()
