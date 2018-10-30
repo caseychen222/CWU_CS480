@@ -68,22 +68,16 @@ function calculate()
 		document.getElementById("calcFace").value = str.join("");
 	}
 	
-	if (decCount > 1)
-	{
-		if (str.indexOf("+") == -1 || str.indexOf("*") == -1 || str.indexOf("-") == -1 || str.indexOf("/") == -1 || str.indexOf("%")== -1 )
-		{
-			document.getElementById("errors").innerHTML = "ERROR: Cannot have more than one decimal point in a single number.";
-			document.getElementById("errors").innerHTML += " <a href='javascript:dismiss()'>DISMISS</a>";
-		
-			return;
-		}
-	}
-	
 	if (!checkForPar())
 	{
 		document.getElementById("errors").innerHTML = "ERROR: Mismatched parentheses.";
 		document.getElementById("errors").innerHTML += " <a href='javascript:dismiss()'>DISMISS</a>";
 		
+		return;
+	}
+	
+	if (!checkForDecimals())
+	{
 		return;
 	}
 
@@ -125,6 +119,22 @@ function checkForPar()
 	}
 	
 	return false;
+}
+
+function checkForDecimals()
+{
+	var str = Array.from(document.getElementById("calcFace").value);
+	
+	if (decCount > 1 && 
+		str.indexOf("+") == -1 && str.indexOf("*") == -1 && str.indexOf("-") == -1 && str.indexOf("/") == -1 && str.indexOf("%")== -1)
+	{
+		document.getElementById("errors").innerHTML = "ERROR: Cannot have more than one decimal point in a single number.";
+		document.getElementById("errors").innerHTML += " <a href='javascript:dismiss()'>DISMISS</a>";
+	
+		return false;
+	}
+	
+	return true;
 }
 
 function squareRoot()
@@ -187,6 +197,11 @@ function trigFx(fx)
 		document.getElementById("errors").innerText = "ERROR: Input a number prior to using the trig buttons.";
 		document.getElementById("errors").innerHTML += " <a href='javascript:dismiss()'>DISMISS</a>";
 		
+		return;
+	}
+	
+	if (!checkForDecimals())
+	{
 		return;
 	}
 	
