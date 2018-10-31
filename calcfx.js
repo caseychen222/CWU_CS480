@@ -62,7 +62,6 @@ function calculate()
 		
 		return;
 	}
-	
 	if (toCheckBeg == "*" || toCheckBeg == "/" || toCheckBeg == "%")
 	{
 		document.getElementById("errors").innerHTML = "ERROR: Cannot have a stray operator to begin an expression.";
@@ -70,14 +69,12 @@ function calculate()
 		
 		return;
 	}
-	
-	if (toCheckBeg == "+")
+	if (toCheckBeg == "+" || toCheckBeg == "0")
 	{
 		str.splice(0, 1);
 		
 		document.getElementById("calcFace").value = str.join("");
 	}
-	
 	if (!checkForPar())
 	{
 		document.getElementById("errors").innerHTML = "ERROR: Mismatched parentheses.";
@@ -85,7 +82,6 @@ function calculate()
 		
 		return;
 	}
-	
 	if (!checkForDecimals())
 	{
 		document.getElementById("errors").innerHTML = "ERROR: Cannot have more than one decimal point in a single number.";
@@ -93,7 +89,7 @@ function calculate()
 		
 		return;
 	}
-
+	
 	var result = eval(document.getElementById("calcFace").value);
 	
 	if (!isFinite(result))
@@ -137,6 +133,12 @@ function checkForPar()
 function checkForDecimals()
 {
 	var str = Array.from(document.getElementById("calcFace").value);
+	var indPlus = str.indexOf("+");
+	var indMult = str.indexOf("*");
+	var indSub = str.indexOf("-");
+	var indDiv = str.indexOf("/");
+	var indMod = str.indexOf("%");
+	var patt1 = /[0-9]/g;
 	
 	if (decCount > 1)
 	{
@@ -154,6 +156,13 @@ function squareRoot()
 	if (document.getElementById("calcFace").value == "")
 	{
 		document.getElementById("errors").innerHTML = "ERROR: Input a number prior to using the &radic; button.";
+		document.getElementById("errors").innerHTML += " <a href='javascript:dismiss()'>DISMISS</a>";
+		
+		return;
+	}
+	if (!checkForPar())
+	{
+		document.getElementById("errors").innerHTML = "ERROR: Mismatched parentheses.";
 		document.getElementById("errors").innerHTML += " <a href='javascript:dismiss()'>DISMISS</a>";
 		
 		return;
@@ -184,6 +193,13 @@ function square()
 		
 		return;
 	}
+	if (!checkForPar())
+	{
+		document.getElementById("errors").innerHTML = "ERROR: Mismatched parentheses.";
+		document.getElementById("errors").innerHTML += " <a href='javascript:dismiss()'>DISMISS</a>";
+		
+		return;
+	}
 	
 	var initial = eval(document.getElementById("calcFace").value);
 	var result = initial * initial;
@@ -200,7 +216,7 @@ function backspace()
 	
 	if (a == ".")
 	{
-		--decCount;
+		decCount--;
 	}
 	
 	dispClear();
@@ -216,10 +232,16 @@ function trigFx(fx)
 		
 		return;
 	}
-	
 	if (!checkForDecimals())
 	{
 		document.getElementById("errors").innerHTML = "ERROR: Cannot have more than one decimal point in a single number.";
+		document.getElementById("errors").innerHTML += " <a href='javascript:dismiss()'>DISMISS</a>";
+		
+		return;
+	}
+	if (!checkForPar())
+	{
+		document.getElementById("errors").innerHTML = "ERROR: Mismatched parentheses.";
 		document.getElementById("errors").innerHTML += " <a href='javascript:dismiss()'>DISMISS</a>";
 		
 		return;
@@ -252,6 +274,13 @@ function fact()
 	if (document.getElementById("calcFace").value == "")
 	{
 		document.getElementById("errors").innerText = "ERROR: Input a number prior to using the n! button.";
+		document.getElementById("errors").innerHTML += " <a href='javascript:dismiss()'>DISMISS</a>";
+		
+		return;
+	}
+	if (!checkForPar())
+	{
+		document.getElementById("errors").innerHTML = "ERROR: Mismatched parentheses.";
 		document.getElementById("errors").innerHTML += " <a href='javascript:dismiss()'>DISMISS</a>";
 		
 		return;
@@ -303,6 +332,13 @@ function reciprocal()
 	if (document.getElementById("calcFace").value == "")
 	{
 		document.getElementById("errors").innerText = "ERROR: Input a number prior to using the reciprocal button.";
+		document.getElementById("errors").innerHTML += " <a href='javascript:dismiss()'>DISMISS</a>";
+		
+		return;
+	}
+	if (!checkForPar())
+	{
+		document.getElementById("errors").innerHTML = "ERROR: Mismatched parentheses.";
 		document.getElementById("errors").innerHTML += " <a href='javascript:dismiss()'>DISMISS</a>";
 		
 		return;
