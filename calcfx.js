@@ -8,6 +8,7 @@ var decCount = 0;
 function dispClear()
 {
 	document.getElementById("errors").innerHTML = "";
+	document.getElementById("calcFace").style.color = "#000000";
 	document.getElementById("calcFace").value = "";
 	
 	if (decCount > 0)
@@ -18,11 +19,14 @@ function dispClear()
 
 function dismiss()
 {
+	document.getElementById("calcFace").style.color = "#FF0000";
 	document.getElementById("errors").innerHTML = "";
 }
 
 function placeInCalc(value)
 {
+	document.getElementById("calcFace").style.color = "#000000";
+	
 	var str = Array.from(document.getElementById("calcFace").value);
 	
 	if ((str[str.length - 1] == "/" || str[str.length - 1] == "%") && value == "0")
@@ -54,11 +58,85 @@ function calculate()
 	var str = Array.from(document.getElementById("calcFace").value);
 	var toCheckEnd = str[str.length - 1];
 	var toCheckBeg = str[0];
+	
+	for (var i = 0; i < str.length; i++)
+	{
+		if (str[i] == "+")
+		{
+			if (str[i + 1] == "+")
+			{
+				document.getElementById("errors").innerHTML = "ERROR: There are too many consecutive (+) operations.";
+				document.getElementById("errors").innerHTML += " <a href='javascript:dismiss()'>DISMISS</a>";
+				
+				document.getElementById("calcFace").style.color = "#FF0000";
+			}
+		}
+		else if (toCheckBeg != "-" && str[i] == "-")
+		{
+			if (str[i + 1] == "-")
+			{
+				document.getElementById("errors").innerHTML = "ERROR: There are too many consecutive (-) operations.";
+				document.getElementById("errors").innerHTML += " <a href='javascript:dismiss()'>DISMISS</a>";
+				
+				document.getElementById("calcFace").style.color = "#FF0000";
+				
+				return;
+			}
+		}
+		else if (str[i] == "/")
+		{
+			if (str[i + 1] == "/")
+			{
+				document.getElementById("errors").innerHTML = "ERROR: There are too many consecutive (/) operations.";
+				document.getElementById("errors").innerHTML += " <a href='javascript:dismiss()'>DISMISS</a>";
+				
+				document.getElementById("calcFace").style.color = "#FF0000";
+				
+				return;
+			}
+		}
+		else if (str[i] == "%")
+		{
+			if (str[i + 1] == "%")
+			{
+				document.getElementById("errors").innerHTML = "ERROR: There are too many consecutive (%) operations.";
+				document.getElementById("errors").innerHTML += " <a href='javascript:dismiss()'>DISMISS</a>";
+				
+				document.getElementById("calcFace").style.color = "#FF0000";
+				
+				return;
+			}
+		}
+	}
+	
+	if (str.length == 2)
+	{
+		if (toCheckBeg == "(" && toCheckEnd == ")")
+		{
+			document.getElementById("errors").innerHTML = "ERROR: Please input an expression to be evaluated.";
+			document.getElementById("errors").innerHTML += " <a href='javascript:dismiss()'>DISMISS</a>";
+			
+			document.getElementById("calcFace").style.color = "#FF0000";
+			
+			return;
+		}
+		if (toCheckBeg == ")" && toCheckEnd == "(")
+		{
+			document.getElementById("errors").innerHTML = "ERROR: Parentheses placed in the wrong order.";
+			document.getElementById("errors").innerHTML += " <a href='javascript:dismiss()'>DISMISS</a>";
+			
+			document.getElementById("calcFace").style.color = "#FF0000";
+			
+			return;
+		}
+	}
 
 	if (toCheckEnd == "+" || toCheckEnd == "*" || toCheckEnd == "-" || toCheckEnd == "/" || toCheckEnd == "%" || toCheckEnd == "(" || toCheckEnd == ".")
 	{
 		document.getElementById("errors").innerHTML = "ERROR: Must complete the expression.";
 		document.getElementById("errors").innerHTML += " <a href='javascript:dismiss()'>DISMISS</a>";
+		
+		document.getElementById("calcFace").style.color = "#FF0000";
 		
 		return;
 	}
@@ -68,12 +146,21 @@ function calculate()
 		document.getElementById("errors").innerHTML = "ERROR: Cannot have a stray operator to begin an expression.";
 		document.getElementById("errors").innerHTML += " <a href='javascript:dismiss()'>DISMISS</a>";
 		
+		document.getElementById("calcFace").style.color = "#FF0000";
+		
 		return;
 	}
 	
-	if (toCheckBeg == "+")
+	if (toCheckBeg == "+" || toCheckBeg == "0" || toCheckBeg == str[1] && isNaN(toCheckBeg))
 	{
 		str.splice(0, 1);
+		
+		document.getElementById("calcFace").value = str.join("");
+	}
+	
+	if (toCheckEnd == str[str.length - 2] && isNaN(toCheckEnd))
+	{
+		str.splice(str.length - 2, str.length - 1);
 		
 		document.getElementById("calcFace").value = str.join("");
 	}
@@ -83,6 +170,8 @@ function calculate()
 		document.getElementById("errors").innerHTML = "ERROR: Mismatched parentheses.";
 		document.getElementById("errors").innerHTML += " <a href='javascript:dismiss()'>DISMISS</a>";
 		
+		document.getElementById("calcFace").style.color = "#FF0000";
+		
 		return;
 	}
 	
@@ -91,6 +180,8 @@ function calculate()
 		document.getElementById("errors").innerHTML = "ERROR: Cannot have more than one decimal point in a single number.";
 		document.getElementById("errors").innerHTML += " <a href='javascript:dismiss()'>DISMISS</a>";
 		
+		document.getElementById("calcFace").style.color = "#FF0000";
+		
 		return;
 	}
 
@@ -98,14 +189,18 @@ function calculate()
 	
 	if (!isFinite(result))
 	{
-		document.getElementById("errors").innerHTML = "ERROR: Cannot divide or mod by 0.";
+		document.getElementById("errors").innerHTML = "ERROR: Overflow or cannot divide or mod by 0.";
 		document.getElementById("errors").innerHTML += " <a href='javascript:dismiss()'>DISMISS</a>";
+		
+		document.getElementById("calcFace").style.color = "#FF0000";
 		
 		return;
 	}
 	
 	dispClear();
 	placeInCalc(result);
+	
+	document.getElementById("calcFace").style.color = "#0000FF";
 }
 
 function checkForPar()
@@ -124,8 +219,14 @@ function checkForPar()
 		{
 			rPar++;
 		}
+		else if (str[i] == "(" && str[i + 1] == ")")
+		{
+			document.getElementById("errors").innerHTML = "ERROR: Must complete the expression.";
+			document.getElementById("errors").innerHTML += " <a href='javascript:dismiss()'>DISMISS</a>";
+			
+			return;
+		}
 	}
-	
 	if (lPar == rPar)
 	{
 		return true;
@@ -173,6 +274,7 @@ function squareRoot()
 	
 	dispClear();
 	placeInCalc(root);
+	document.getElementById("calcFace").style.color = "#0000FF";
 }
 
 function square()
@@ -190,6 +292,7 @@ function square()
 	
 	dispClear();
 	placeInCalc(result);
+	document.getElementById("calcFace").style.color = "#0000FF";
 }
 
 function backspace()
@@ -233,16 +336,19 @@ function trigFx(fx)
 		case "sine":
 			dispClear();
 			placeInCalc(Math.sin(inRad));
+			document.getElementById("calcFace").style.color = "#0000FF";
 			break;
 			
 		case "cosine":
 			dispClear();
 			placeInCalc(Math.cos(inRad));
+			document.getElementById("calcFace").style.color = "#0000FF";
 			break;
 			
 		case "tangent":
 			dispClear();
 			placeInCalc(Math.tan(inRad));
+			document.getElementById("calcFace").style.color = "#0000FF";
 			break;
 	}
 }
@@ -253,6 +359,8 @@ function fact()
 	{
 		document.getElementById("errors").innerText = "ERROR: Input a number prior to using the n! button.";
 		document.getElementById("errors").innerHTML += " <a href='javascript:dismiss()'>DISMISS</a>";
+		
+		document.getElementById("calcFace").style.color = "#FF0000";
 		
 		return;
 	}
@@ -272,6 +380,7 @@ function fact()
 	{
 		dispClear();
 		placeInCalc(result);
+		document.getElementById("calcFace").style.color = "#0000FF";
 		
 		return;
 	}
@@ -296,6 +405,7 @@ function fact()
 
 	dispClear();
 	placeInCalc(result);
+	document.getElementById("calcFace").style.color = "#0000FF";
 }
 
 function reciprocal()
@@ -304,6 +414,8 @@ function reciprocal()
 	{
 		document.getElementById("errors").innerText = "ERROR: Input a number prior to using the reciprocal button.";
 		document.getElementById("errors").innerHTML += " <a href='javascript:dismiss()'>DISMISS</a>";
+		
+		document.getElementById("calcFace").style.color = "#FF0000";
 		
 		return;
 	}
@@ -315,6 +427,8 @@ function reciprocal()
 		document.getElementById("errors").innerHTML = "ERROR: Cannot divide or mod by 0.";
 		document.getElementById("errors").innerHTML += " <a href='javascript:dismiss()'>DISMISS</a>";
 		
+		document.getElementById("calcFace").style.color = "#FF0000";
+		
 		return;
 	}
 	
@@ -322,4 +436,5 @@ function reciprocal()
 	
 	dispClear();
 	placeInCalc(result);
+	document.getElementById("calcFace").style.color = "#0000FF";
 }
