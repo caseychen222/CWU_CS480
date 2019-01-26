@@ -140,7 +140,6 @@ function calculate()
 		
 		return;
 	}
-	
 	if (toCheckBeg == "*" || toCheckBeg == "/" || toCheckBeg == "%")
 	{
 		document.getElementById("errors").innerHTML = "ERROR: Cannot have a stray operator to begin an expression.";
@@ -150,13 +149,18 @@ function calculate()
 		
 		return;
 	}
+<<<<<<< HEAD
 	
 	if (toCheckBeg == "+" || toCheckBeg == "0" || toCheckBeg == str[1] && isNaN(toCheckBeg))
+=======
+	if (toCheckBeg == "+" || toCheckBeg == "0")
+>>>>>>> 1a51dc674d0a48a8cfe2abfe37c598a6f88c655b
 	{
 		str.splice(0, 1);
 		
 		document.getElementById("calcFace").value = str.join("");
 	}
+<<<<<<< HEAD
 	
 	if (toCheckEnd == str[str.length - 2] && isNaN(toCheckEnd))
 	{
@@ -165,6 +169,8 @@ function calculate()
 		document.getElementById("calcFace").value = str.join("");
 	}
 	
+=======
+>>>>>>> 1a51dc674d0a48a8cfe2abfe37c598a6f88c655b
 	if (!checkForPar())
 	{
 		document.getElementById("errors").innerHTML = "ERROR: Mismatched parentheses.";
@@ -174,7 +180,6 @@ function calculate()
 		
 		return;
 	}
-	
 	if (!checkForDecimals())
 	{
 		document.getElementById("errors").innerHTML = "ERROR: Cannot have more than one decimal point in a single number.";
@@ -184,7 +189,7 @@ function calculate()
 		
 		return;
 	}
-
+	
 	var result = eval(document.getElementById("calcFace").value);
 	
 	if (!isFinite(result))
@@ -238,6 +243,12 @@ function checkForPar()
 function checkForDecimals()
 {
 	var str = Array.from(document.getElementById("calcFace").value);
+	var indPlus = str.indexOf("+");
+	var indMult = str.indexOf("*");
+	var indSub = str.indexOf("-");
+	var indDiv = str.indexOf("/");
+	var indMod = str.indexOf("%");
+	var patt1 = /[0-9]/g;
 	
 	if (decCount > 1)
 	{
@@ -255,6 +266,13 @@ function squareRoot()
 	if (document.getElementById("calcFace").value == "")
 	{
 		document.getElementById("errors").innerHTML = "ERROR: Input a number prior to using the &radic; button.";
+		document.getElementById("errors").innerHTML += " <a href='javascript:dismiss()'>DISMISS</a>";
+		
+		return;
+	}
+	if (!checkForPar())
+	{
+		document.getElementById("errors").innerHTML = "ERROR: Mismatched parentheses.";
 		document.getElementById("errors").innerHTML += " <a href='javascript:dismiss()'>DISMISS</a>";
 		
 		return;
@@ -286,6 +304,13 @@ function square()
 		
 		return;
 	}
+	if (!checkForPar())
+	{
+		document.getElementById("errors").innerHTML = "ERROR: Mismatched parentheses.";
+		document.getElementById("errors").innerHTML += " <a href='javascript:dismiss()'>DISMISS</a>";
+		
+		return;
+	}
 	
 	var initial = eval(document.getElementById("calcFace").value);
 	var result = initial * initial;
@@ -303,7 +328,7 @@ function backspace()
 	
 	if (a == ".")
 	{
-		--decCount;
+		decCount--;
 	}
 	
 	dispClear();
@@ -319,10 +344,16 @@ function trigFx(fx)
 		
 		return;
 	}
-	
 	if (!checkForDecimals())
 	{
 		document.getElementById("errors").innerHTML = "ERROR: Cannot have more than one decimal point in a single number.";
+		document.getElementById("errors").innerHTML += " <a href='javascript:dismiss()'>DISMISS</a>";
+		
+		return;
+	}
+	if (!checkForPar())
+	{
+		document.getElementById("errors").innerHTML = "ERROR: Mismatched parentheses.";
 		document.getElementById("errors").innerHTML += " <a href='javascript:dismiss()'>DISMISS</a>";
 		
 		return;
@@ -361,6 +392,13 @@ function fact()
 		document.getElementById("errors").innerHTML += " <a href='javascript:dismiss()'>DISMISS</a>";
 		
 		document.getElementById("calcFace").style.color = "#FF0000";
+		
+		return;
+	}
+	if (!checkForPar())
+	{
+		document.getElementById("errors").innerHTML = "ERROR: Mismatched parentheses.";
+		document.getElementById("errors").innerHTML += " <a href='javascript:dismiss()'>DISMISS</a>";
 		
 		return;
 	}
@@ -416,6 +454,13 @@ function reciprocal()
 		document.getElementById("errors").innerHTML += " <a href='javascript:dismiss()'>DISMISS</a>";
 		
 		document.getElementById("calcFace").style.color = "#FF0000";
+		
+		return;
+	}
+	if (!checkForPar())
+	{
+		document.getElementById("errors").innerHTML = "ERROR: Mismatched parentheses.";
+		document.getElementById("errors").innerHTML += " <a href='javascript:dismiss()'>DISMISS</a>";
 		
 		return;
 	}
